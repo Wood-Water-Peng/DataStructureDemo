@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import java.util.LinkedList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,6 +24,9 @@ public class MainActivity extends AppCompatActivity {
 //            binaryTree.putNode(new TreeNode<Integer>(remove));
 //
 //        }
+//        int[] ints = {1,2,3};
+//        int index = binaryTree.binarySearchWithLeft(ints, 2);
+//        Log.i(TAG, "binaryTree binarySearch index->" + index);
 //        binaryTree.preOderRecur(binaryTree.root);
 //
 //        binaryTree.print(binaryTree.findMin());
@@ -35,11 +39,17 @@ public class MainActivity extends AppCompatActivity {
 //
 //        StringUtil.printAllCharWords(chars, 0);
 
-        CollectionUtil collectionUtil = new CollectionUtil();
-        int[] ints = {4, 6, 3,3,3,3};
-//        collectionUtil.fastSort(ints);
-        int kElement = collectionUtil.checkHalfCountNumber(ints);
-        Log.i(TAG, "kElement->" + kElement);
+        NumberUtil numberUtil = new NumberUtil();
+//        CollectionUtil collectionUtil = new CollectionUtil();
+//        collectionUtil.fastSort(new int[]{8,9,6,1,4,5,10,8});
+//        int halfCountNumber = collectionUtil.checkHalfCountNumber(ints);
+//        Log.i(TAG, "halfCountNumber->" + halfCountNumber);
+//        numberUtil.minPathSum(new int[][]{{1,3,1}, {1,5,1}, {4,2,1}});
+        numberUtil.arrangeArrayToMiniNumber(new int[]{21,32,12,6,1});
+
+//        NumberUtil numberUtil = new NumberUtil();
+//        LinkedList<int[][]> ints = numberUtil.queueArrange(4);
+//        numberUtil.findAllMethods(new int[]{1, 1, 1}, 3);
     }
 
     //反转链表

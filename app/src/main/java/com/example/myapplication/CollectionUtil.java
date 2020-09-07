@@ -1,9 +1,15 @@
 package com.example.myapplication;
 
+import android.util.Log;
+
+import java.util.Random;
+
 //
 //数组相关
 //
 public class CollectionUtil {
+    private static final String TAG = "CollectionUtil";
+
     //数组中出现次数超过数组长度一半的数字
     //分析：
     //假设数组{2,4,3,3,3,3,5},长度7
@@ -12,15 +18,28 @@ public class CollectionUtil {
     public int checkHalfCountNumber(int[] arr) {
         // 分析： 这个数字只有1或者0个
         int middle = arr.length >> 1;
-        int element = findKElement(arr, middle);
+//        int start = 0;
+//        int end = arr.length - 1;
+//        int index = partition(arr, start, end);
+//        while (index != middle) {
+//            if (index > middle) {
+//                end = index - 1;
+//                index = partition(arr, start, end);
+//            } else {
+//                start = index + 1;
+//                index = partition(arr, start, end);
+//            }
+//        }
+        fastSort(arr);
         int count = 0;
+        int element = arr[middle];
         for (int i = 0; i < arr.length; i++) {
             if (element == arr[i]) {
                 count++;
             }
         }
         if (count > middle) {
-            return middle;
+            return element;
         } else {
             return Integer.MIN_VALUE;
         }
@@ -34,7 +53,7 @@ public class CollectionUtil {
 
     private void doSort(int[] list, int left, int right) {
         if (left < right) {
-            int mid = partition3(list, left, right);
+            int mid = partition3Temp(list, left, right);
             doSort(list, left, mid - 1);
             doSort(list, mid + 1, right);
         }
@@ -51,13 +70,13 @@ public class CollectionUtil {
      */
     private int partition(int[] arr, int left, int right) {
         int middle, pivot;
-        middle = (left - 1);
-        pivot = arr[right]; //选取最左边的元素为基准数
+        middle = (left - 1); //更小的元素的索引
+        pivot = arr[right]; //选取最右边的元素为基准数
 
         for (int i = left; i < right; i++) {
-            //比基准点大的元素交换到右边
+            //比基准点小的元素交换到左边
             if (arr[i] <= pivot) {
-                middle++;
+                middle++; //指向当前比基准数小的元素索引
                 //交换位置
                 int tmp = arr[i];
                 arr[i] = arr[middle];
@@ -105,15 +124,16 @@ public class CollectionUtil {
      */
     private int partition3(int[] arr, int left, int right) {
         int pivot = arr[left]; //选取最左边的元素为基准数
-
         int i = left;
         int j = right;
         while (i != j) {
 
             while (arr[j] >= pivot && i < j) {
+                //j会在<=基准点的元素索引停下
                 j--;
             }
             while (arr[i] <= pivot && i < j) {
+                //i会在>=基准点的元素索引停下
                 i++;
             }
 
@@ -161,4 +181,145 @@ public class CollectionUtil {
     }
 
 
+    /**
+     * @param arr
+     * @return 最小的k个数
+     * <p>
+     * 比如输入{4,5,1,6,2,7,3,8}
+     * <p>
+     * 那么输出应该是{1,2,3,4}
+     * <p>
+     * 暴力方法：排序之后取出前k个，时间复杂度为O(nlogn)
+     */
+    public int[] findMinKCount(int[] arr, int k) {
+        //根据找到第k大的数的思路，我们可以让比k小的数都在其左边，比他大的都在他的右边
+        if (k > arr.length) return arr;
+        int start = 0;
+        int end = arr.length - 1;
+        int index = partition(arr, start, end);
+        while (index != k - 1) {
+            if (index > k - 1) {
+                end = index - 1;
+                index = partition(arr, start, end);
+            } else {
+                start = index + 1;
+                index = partition(arr, start, end);
+            }
+        }
+        printArr(arr);
+        int[] kInts = new int[index + 1];
+        for (int i = 0; i < index + 1; i++) {
+            kInts[i] = arr[i];
+        }
+        return kInts;
+    }
+
+    /**
+     * @param arr
+     * @return 和最大的连续子数组
+     */
+    public int[] maxContinuousArray(int[] arr) {
+        int sum = 0;
+        int start = 0;
+        int end = 0;
+        int maxSum = 0;
+        for (int i = 0; i < arr.length; i++) {
+            int value = arr[i];
+            sum += value;
+            if (sum < value) {
+                start = i;
+                sum = value;
+            }
+
+            if (sum > maxSum) {
+                end = i;
+            }
+            maxSum = sum;
+        }
+        int[] max = new int[end + 1 - start];
+        int count = 0;
+        for (int i = start; i < end + 1; i++) {
+            max[count] = arr[i];
+            count++;
+        }
+        return max;
+    }
+
+    /**
+     * @param arr
+     * @return 把数据排列成一个最小的数
+     * 例如输入{3,32,321}  输出应该为321323
+     * <p>
+     * 解法一：将所有的数进行排列，n个数共有n!个排列，然后找出排列中的最小值
+     */
+    public int rankMinNumber(int[] arr) {
+        return -1;
+    }
+
+
+    public void printArr(int[] arr) {
+        StringBuffer buffer = new StringBuffer();
+        buffer.append("{");
+        for (int i = 0; i < arr.length; i++) {
+            buffer.append(arr[i]);
+            buffer.append(",");
+        }
+        buffer.append("}");
+        Log.i(TAG, "printArr ->" + buffer.toString());
+    }
+
+    /**
+     * 输入一个正数的数组，尝试着将其分成两个和相等的子数组
+     * 如输入{1, 2, 3, 4}，返回true
+     * {1, 4} & {2, 3}
+     * <p>
+     * 思路：暴力解法  假设数组的总和为S，那么找出和为S/2的的所有子数组
+     */
+
+    public boolean partitionEqualArray(int[] arr) {
+        int sum = 0;
+        for (int i = 0; i < arr.length; i++) {
+            sum += arr[i];
+        }
+        if ((sum >> 1) % 2 != 0) {
+            //奇数
+            return false;
+        }
+
+        return equalArrayRecur(arr, sum / 2, 0);
+    }
+
+    private boolean equalArrayRecur(int[] arr, int sum, int index) {
+        return false;
+    }
+
+    /**
+     * 双端遍历法
+     *
+     * @param arr
+     * @param left
+     * @param right
+     */
+    private int partition3Temp(int[] arr, int left, int right) {
+        int i = left; //从左往右扫描，找到比基准值大的数
+        int j = right; //从右往左扫描，找到比基准值小的数
+        int pivot = arr[right];
+        while (i < j) {
+            while (arr[i] <= pivot && i < j) {
+                i++;
+            }
+
+            while (arr[j] >= pivot && i < j) {
+                j--;
+            }
+
+            int tmp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = tmp;
+        }
+        //问题:此时i是否等于j?
+        arr[right] = arr[i];
+        arr[i] = pivot;
+        return i;
+    }
 }
