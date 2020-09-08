@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,13 +19,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 //
-//        BinaryTree<Integer> binaryTree = new BinaryTree<>();
-//        LinkedList<Integer> linkList = TreeReverseClass.generateLinkList();
-//        while (!linkList.isEmpty()) {
-//            Integer remove = linkList.remove();
-//            binaryTree.putNode(new TreeNode<Integer>(remove));
-//
-//        }
+        BinaryTree<Integer> binaryTree = new BinaryTree<>();
+        binaryTree.putNode(new TreeNode<Integer>(8));
+        binaryTree.putNode(new TreeNode<Integer>(6));
+        binaryTree.putNode(new TreeNode<Integer>(10));
+        binaryTree.putNode(new TreeNode<Integer>(5));
+        binaryTree.putNode(new TreeNode<Integer>(7));
+        binaryTree.putNode(new TreeNode<Integer>(9));
+        binaryTree.putNode(new TreeNode<Integer>(11));
+        binaryTree.putNode(new TreeNode<Integer>(3));
+        binaryTree.putNode(new TreeNode<Integer>(12));
 //        int[] ints = {1,2,3};
 //        int index = binaryTree.binarySearchWithLeft(ints, 2);
 //        Log.i(TAG, "binaryTree binarySearch index->" + index);
@@ -39,17 +44,57 @@ public class MainActivity extends AppCompatActivity {
 //
 //        StringUtil.printAllCharWords(chars, 0);
 
-        NumberUtil numberUtil = new NumberUtil();
+//        NumberUtil numberUtil = new NumberUtil();
 //        CollectionUtil collectionUtil = new CollectionUtil();
 //        collectionUtil.fastSort(new int[]{8,9,6,1,4,5,10,8});
 //        int halfCountNumber = collectionUtil.checkHalfCountNumber(ints);
 //        Log.i(TAG, "halfCountNumber->" + halfCountNumber);
 //        numberUtil.minPathSum(new int[][]{{1,3,1}, {1,5,1}, {4,2,1}});
-        numberUtil.arrangeArrayToMiniNumber(new int[]{21,32,12,6,1});
+//        numberUtil.arrangeArrayToMiniNumber(new int[]{21,32,12,6,1});
 
 //        NumberUtil numberUtil = new NumberUtil();
 //        LinkedList<int[][]> ints = numberUtil.queueArrange(4);
 //        numberUtil.findAllMethods(new int[]{1, 1, 1}, 3);
+
+        LinkListUtil linkListUtil = new LinkListUtil();
+        LinkNode<Integer> head = new LinkNode<>(100);
+        List<LinkNode<Integer>> list=new ArrayList();
+        list.add(head);
+        LinkNode<Integer> cur = head;
+//        for (int i = 0; i < 5; i++) {
+//            LinkNode<Integer> node = new LinkNode<>(i);
+//            list.add(node);
+//            cur.pNext=node;
+//            cur=node;
+//        }
+//        cur=head;
+        Random random = new Random();
+        while (cur!=null){
+            cur.pSibling=list.get(random.nextInt(list.size()));
+            cur=cur.pNext;
+        }
+        linkListUtil.copyComplexLinkList02(head);
+    }
+
+
+    private Node<Integer> generateLinkList() {
+        Node<Integer> root = new Node<Integer>(1);
+        Node<Integer> cur = root;
+        for (int i = 3; i < 8; i += 2) {
+            cur.pNext = new Node(i);
+            cur = cur.pNext;
+        }
+        return root;
+    }
+
+    private Node<Integer> generateLinkList2() {
+        Node<Integer> root = new Node<Integer>(2);
+        Node<Integer> cur = root;
+        for (int i = 4; i < 9; i += 2) {
+            cur.pNext = new Node(i);
+            cur = cur.pNext;
+        }
+        return root;
     }
 
     //反转链表
