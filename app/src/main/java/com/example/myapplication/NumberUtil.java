@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -699,15 +700,15 @@ public class NumberUtil {
         if (left >= right) return;
         String mid = str[right];
         int midInt = left;
-        int i=left;
-        int j=right;
+        int i = left;
+        int j = right;
         while (i < j) {
             //在右边找到一个小的
-            while (compareStr(str[j], mid) >=0 && i < j) {
+            while (compareStr(str[j], mid) >= 0 && i < j) {
                 j--;
             }
             //在左边找到一个大的
-            while (compareStr(str[i], mid) <=0 && i < j) {
+            while (compareStr(str[i], mid) <= 0 && i < j) {
                 i++;
             }
             //将左边的大的和右边的小的，交换
@@ -716,8 +717,8 @@ public class NumberUtil {
             str[j] = tmp;
 
         }
-        str[right]=str[midInt];
-        str[midInt]=mid;
+        str[right] = str[midInt];
+        str[midInt] = mid;
         midInt = i;
         fastSortStr(str, left, midInt - 1);
         fastSortStr(str, midInt + 1, right);
@@ -737,4 +738,195 @@ public class NumberUtil {
         }
     }
 
+    /**
+     * 找到数组中出现次数超过一半的数字
+     *
+     * @param arr [1,2,3,2,2,2,5]
+     * @return 2
+     * <p>
+     * 思路一：
+     * <p>
+     * 先给数组排序，如果一个数出现的次数超过一半，那么，排完序后中间的数字肯定是那个数
+     * 时间复杂度 NLogN
+     * <p>
+     * 思路二：
+     * <p>
+     * 根据思路一的思路，我们其实不用给数组排序，我们只需要找到数组中第k(k=n/2)大的数字就行
+     * 然后再遍历统计这个数字在数组中出现的次数
+     * step1:找到数组中第k大的数字
+     * step2:遍历数组，计算出该数字出现的次数
+     */
+    public int findHalfCountNumInArray(int[] arr) {
+
+        int partition = partition(arr, 0, arr.length - 1);
+        int start = 0;
+        int end = arr.length - 1;
+        int num = arr.length >> 1;//中位数
+        while (num != partition) {
+            if (num > partition) {
+                //右边找
+                start = partition + 1;
+                partition = partition(arr, start, end);
+            } else {
+                //左边找
+                end = partition - 1;
+                partition = partition(arr, start, end);
+            }
+        }
+        int count = 0;
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[partition] == arr[i]) {
+                count++;
+            }
+        }
+        if (count > arr.length / 2) {
+            return arr[partition];
+        } else {
+            return -1;
+        }
+    }
+
+
+    private int partition(int[] arr, int start, int end) {
+        //扫描，交换并返回中间数的索引
+        int pivot = arr[end];
+        int middle = start - 1;  //小于基准值的坑位
+        for (int i = start; i < end; i++) {
+            //从左到右遍历，找到小的，交换到middle的位置
+            if (arr[i] <= pivot) {
+                middle++;
+                swap(arr, i, middle);
+            }
+        }
+        //因为之前都是把小的交换到左边，所以middle往左的都比pivot小
+        swap(arr, middle + 1, end);
+        return middle + 1;
+    }
+
+    private void swap(int[] arr, int i, int j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+
+    /**
+     * @param arr
+     * @return 最小的k个数
+     * 思路一：
+     * 先排序，找到前面的k个
+     * 时间复杂度：NLogN
+     * <p>
+     * 思路二：
+     * 不用排序，利用快排思想，但是需要改变原数组
+     * <p>
+     * 思路三：
+     * 最小堆，需要新的空间，不改变原数组，适合处理海量数据
+     */
+    public int[] minKNum(int[] arr, int k) {
+        if (k < 1 || k > arr.length) {
+            return new int[0];
+        }
+        int start = 0;
+        int end = arr.length - 1;
+        int partition = partition(arr, start, end);
+        while (partition != k) {
+            if (k < partition) {
+                end = partition - 1;
+                partition = partition(arr, start, end);
+            } else {
+                start = partition + 1;
+                partition = partition(arr, start, end);
+            }
+        }
+        if (partition == k) {
+            //找到了这个数
+            int[] result = new int[k];
+            for (int i = 0; i < k; i++) {
+                result[i] = arr[i];
+            }
+            return result;
+        } else {
+            return new int[0];
+        }
+    }
+
+    /**
+     * @param arr
+     * @param k
+     * @return 最小堆思想
+     * <p>
+     * 当输入的数据特别大时，我们维护一个总量为k的最小堆
+     */
+    public int[] minKNum2(int[] arr, int k) {
+        return new int[0];
+    }
+
+
+    /**
+     * 三数之和
+     * <p>
+     * arr [-1, 0, 1, 2, -1, -4]，
+     * <p>
+     * 找到arr中和为0的三个元素的组合
+     * 要求：arr中的同一个元素不能多次使用
+     * <p>
+     * 思路一：
+     * <p>
+     * 1.先通过遍历找到2个数，时间复杂度为O(n²)，
+     * 2.然后使用一个哈希表去找到第三个元素，时间复杂度为O(1)，空间复杂度为O(n)
+     * <p>
+     * <p>
+     * 思路二：
+     * <p>
+     * 1.先排序，时间复杂度NLogN
+     * 2.遍历+双指针，找出所有符合条件的组合，注意去重 时间复杂度为O(n)
+     * <p>
+     * NLogN+O(n)=NLogN
+     */
+    public List<List<Integer>> threeNumSum(int[] arr) {
+        List<List<Integer>> total = new ArrayList<>();
+        if (arr.length < 3) return total;
+        quickSort(arr);
+        if (arr[0] > 0 || arr[arr.length - 1] < 0) return total;
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] > 0) break;
+            if (i > 0 && arr[i] == arr[i - 1]) continue; //去重
+            int left = i + 1;
+            int right = arr.length - 1;
+            //以i为c位，左右两边向i靠齐
+            //此时，左边的最小，右边的最大
+            while (left < right) {
+                int sum = arr[left] + arr[right] + arr[i];
+                if (sum == 0) {
+                    List<Integer> list = new ArrayList();
+                    list.add(arr[left]);
+                    list.add(arr[i]);
+                    list.add(arr[right]);
+                    total.add(list);
+                    //去重
+                    while (left < right && arr[left] == arr[left + 1]) left++;
+                    while (left < right && arr[right] == arr[right - 1]) right--;
+                    left++;
+                    right--;
+                } else if (sum > 0) {
+                    right--;
+                } else {
+                    left++;
+                }
+            }
+        }
+        return total;
+    }
+
+    private void quickSort(int[] arr) {
+        doQuickSort(arr, 0, arr.length - 1);
+    }
+
+    private void doQuickSort(int[] arr, int start, int end) {
+        if (start < end) {
+            int partition = partition(arr, start, end);
+            doQuickSort(arr, start, partition - 1);
+            doQuickSort(arr, partition + 1, end);
+        }
+    }
 }

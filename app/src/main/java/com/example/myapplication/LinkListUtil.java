@@ -152,10 +152,38 @@ public class LinkListUtil {
         if (head == null) return;
         StringBuilder builder = new StringBuilder();
         while (head != null) {
-            builder.append(head.toString()+"=");
+            builder.append(head.toString() + "=");
             head = head.pNext;
         }
         Log.i(TAG, "printLinkList->" + builder.toString());
     }
+
+    /**
+     * 从尾到头打印链表
+     * <p>
+     * 注意点：
+     * 1.是否能改变原来的数据结构
+     * <p>
+     * 思路:
+     * <p>
+     * 1.遍历链表，将节点依次压入栈中
+     * <p>
+     * 2.使用递归
+     */
+    public void printListFromEnd2Start(LinkNode<Integer> head) {
+        StringBuilder builder = new StringBuilder();
+        visitNode(head, builder);
+        Log.i(TAG, "printListFromEnd2Start->" + builder.toString());
+    }
+
+    private void visitNode(LinkNode<Integer> node, StringBuilder sb) {
+        if (node==null) {
+            return;
+        }
+        visitNode(node.pNext, sb);
+        //归的过程
+        sb.append(node.data);
+    }
+
 
 }

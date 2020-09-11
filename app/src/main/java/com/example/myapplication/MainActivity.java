@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 //        StringUtil.printAllCharWords(chars, 0);
 
 //        NumberUtil numberUtil = new NumberUtil();
-//        CollectionUtil collectionUtil = new CollectionUtil();
+        CollectionUtil collectionUtil = new CollectionUtil();
 //        collectionUtil.fastSort(new int[]{8,9,6,1,4,5,10,8});
 //        int halfCountNumber = collectionUtil.checkHalfCountNumber(ints);
 //        Log.i(TAG, "halfCountNumber->" + halfCountNumber);
@@ -57,23 +57,27 @@ public class MainActivity extends AppCompatActivity {
 //        numberUtil.findAllMethods(new int[]{1, 1, 1}, 3);
 
         LinkListUtil linkListUtil = new LinkListUtil();
-        LinkNode<Integer> head = new LinkNode<>(100);
-        List<LinkNode<Integer>> list=new ArrayList();
-        list.add(head);
+        LinkNode<Integer> head = new LinkNode<>(1);
         LinkNode<Integer> cur = head;
-//        for (int i = 0; i < 5; i++) {
-//            LinkNode<Integer> node = new LinkNode<>(i);
-//            list.add(node);
-//            cur.pNext=node;
-//            cur=node;
-//        }
-//        cur=head;
-        Random random = new Random();
-        while (cur!=null){
-            cur.pSibling=list.get(random.nextInt(list.size()));
-            cur=cur.pNext;
+        for (int i = 2; i < 5; i++) {
+            LinkNode<Integer> node = new LinkNode<>(i);
+            cur.pNext = node;
+            cur = node;
         }
-        linkListUtil.copyComplexLinkList02(head);
+//        cur=head;
+//        Random random = new Random();
+//        while (cur!=null){
+//            cur.pSibling=list.get(random.nextInt(list.size()));
+//            cur=cur.pNext;
+//        }
+//        linkListUtil.copyComplexLinkList02(head);
+//        StringUtil stringUtil = new StringUtil();
+//        stringUtil.printStringCombinations("abc");
+
+//        NumberUtil numberUtil = new NumberUtil();
+//        numberUtil.threeNumSum(new int[]{0,0,0,0});
+//        linkListUtil.printListFromEnd2Start(head);
+        collectionUtil.combine(4,2);
     }
 
 

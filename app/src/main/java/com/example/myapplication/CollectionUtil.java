@@ -2,6 +2,13 @@ package com.example.myapplication;
 
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 //
@@ -322,4 +329,143 @@ public class CollectionUtil {
         arr[i] = pivot;
         return i;
     }
+
+    /**
+     * 交换两个数组的某一个元素，使其和相等
+     *
+     * @param array1
+     * @param array2
+     * @return
+     */
+    public int[] findSwapValues(int[] array1, int[] array2) {
+        int[] result = new int[2];
+        if (array1.length == 0 || array2.length == 0) return result;
+        int sum1 = 0;
+        for (int i = 0; i < array1.length; i++) {
+            sum1 += array1[i];
+        }
+        int sum2 = 0;
+        for (int i = 0; i < array2.length; i++) {
+            sum2 += array2[i];
+        }
+        int diff = sum1 - sum2;
+        if (Math.abs(diff) % 2 != 0) {
+            //奇数
+            return new int[0];
+        }
+
+        //将某个数组映射为hash表，用空间换时间
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < array1.length; i++) {
+            map.put(array1[i], i);
+        }
+        boolean hit = false;
+        for (int i = 0; i < array2.length; i++) {
+            if (diff == 0) {
+                //找到相同的数即可
+                if (map.containsKey(array2[i])) {
+                    result[0] = array1[i];
+                    result[1] = array2[i];
+                    hit = true;
+                    break;
+                }
+            } else if (diff > 0) {
+                //sum1>sum2
+                if (map.containsKey(array2[i] + (diff >> 1))) {
+                    result[0] = array1[map.get(array2[i] + (diff >> 1))];
+                    result[1] = array2[i];
+                    hit = true;
+                    break;
+                }
+            } else {
+                //sum1<sum2
+                if (map.containsKey(array2[i] - (-diff >> 1))) {
+                    result[0] = array1[map.get(array2[i] - (-diff >> 1))];
+                    result[1] = array2[i];
+                    hit = true;
+                    break;
+                }
+            }
+        }
+        if (hit) {
+            return result;
+        } else {
+            return new int[0];
+        }
+    }
+
+    /**
+     * 和为n的k个数的组合
+     *
+     * @param k
+     * @param n
+     * @return 如k=3,n=7
+     * [[1,2,4]]
+     * <p>
+     * 输入: k = 3, n = 9
+     * 输出: [[1,2,6], [1,3,5], [2,3,4]]
+     * <p>
+     * 思路：
+     */
+    public List<List<Integer>> combinationSum3(int k, int n) {
+        return null;
+    }
+
+    /**
+     * 给定两个整数 n 和 k，返回 1 ... n 中所有可能的 k 个数的组合。
+     *
+     * @param n
+     * @param k
+     * @return 输入: n = 4, k = 2
+     * 输出:
+     * [
+     * [2,4],
+     * [3,4],
+     * [2,3],
+     * [1,2],
+     * [1,3],
+     * [1,4],
+     * ]
+     */
+    List<List<Integer>> total = new ArrayList<>();
+    List<Integer> list = new ArrayList<>();
+
+    public List<List<Integer>> combine(int n, int k) {
+
+        for (int i = 1; i <= n; i++) {
+            combineRecur(n, i, k);
+        }
+        return total;
+    }
+
+    /**
+     * @param index 当前递归的索引
+     * @param rest  还剩下的数
+     */
+    private void combineRecur(int n, int index, int rest) {
+        if (rest == 0) {
+            List<Integer> newList = new ArrayList<>();
+            for (int i = 0; i < list.size(); i++) {
+                newList.add(list.get(i));
+            }
+            total.add(newList);
+            return;
+        }
+
+        //从index到n选一个
+        list.add(index);
+        int cur = index;
+        cur++;
+        combineRecur(n, cur, rest - 1);
+        if (list.size() == 2) {
+            list.remove(list.size() - 1);
+            return;
+        }
+
+        if (cur <= n) {
+            combineRecur(n, cur, rest - 1);
+        }
+
+    }
+
 }
