@@ -77,7 +77,10 @@ public class MainActivity extends AppCompatActivity {
 //        NumberUtil numberUtil = new NumberUtil();
 //        numberUtil.threeNumSum(new int[]{0,0,0,0});
 //        linkListUtil.printListFromEnd2Start(head);
-        collectionUtil.combine(4,2);
+//        collectionUtil.combine(4,3);
+
+        BacktrackingDemo backtrackingDemo = new BacktrackingDemo();
+        backtrackingDemo.permuteUnique(new int[]{2,1,2});
     }
 
 

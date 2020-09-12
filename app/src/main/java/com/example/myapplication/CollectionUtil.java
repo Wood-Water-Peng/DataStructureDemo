@@ -275,6 +275,22 @@ public class CollectionUtil {
         Log.i(TAG, "printArr ->" + buffer.toString());
     }
 
+    public void printList(List<List<Integer>> list) {
+        StringBuffer buffer = new StringBuffer();
+        buffer.append("{");
+        for (int i = 0; i < list.size(); i++) {
+            buffer.append("[");
+            for (int j = 0; j < list.get(i).size(); j++) {
+                buffer.append(list.get(i).get(j));
+                buffer.append(",");
+            }
+            buffer.append("]");
+        }
+        buffer.append("}");
+        Log.i(TAG, "printList ->" + buffer.toString());
+    }
+
+
     /**
      * 输入一个正数的数组，尝试着将其分成两个和相等的子数组
      * 如输入{1, 2, 3, 4}，返回true
@@ -431,41 +447,27 @@ public class CollectionUtil {
     List<Integer> list = new ArrayList<>();
 
     public List<List<Integer>> combine(int n, int k) {
-
-        for (int i = 1; i <= n; i++) {
-            combineRecur(n, i, k);
-        }
+        combineRecur(n, 0, k);
+        printList(total);
         return total;
     }
 
     /**
      * @param index 当前递归的索引
-     * @param rest  还剩下的数
+     * @param k     总的路径数   相当于数的深度
      */
-    private void combineRecur(int n, int index, int rest) {
-        if (rest == 0) {
-            List<Integer> newList = new ArrayList<>();
-            for (int i = 0; i < list.size(); i++) {
-                newList.add(list.get(i));
-            }
-            total.add(newList);
+    private void combineRecur(int n, int index, int k) {
+        if (k == list.size()) {
+            total.add(new ArrayList<>(list));
             return;
         }
 
         //从index到n选一个
-        list.add(index);
-        int cur = index;
-        cur++;
-        combineRecur(n, cur, rest - 1);
-        if (list.size() == 2) {
+        for (int i = index; i < n; i++) {
+            list.add(i + 1);
+            combineRecur(n, i + 1, k);
             list.remove(list.size() - 1);
-            return;
         }
-
-        if (cur <= n) {
-            combineRecur(n, cur, rest - 1);
-        }
-
     }
 
 }
