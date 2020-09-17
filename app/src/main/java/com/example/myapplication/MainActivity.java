@@ -19,16 +19,28 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 //
-        BinaryTree<Integer> binaryTree = new BinaryTree<>();
-        binaryTree.putNode(new TreeNode<Integer>(8));
-        binaryTree.putNode(new TreeNode<Integer>(6));
-        binaryTree.putNode(new TreeNode<Integer>(10));
-        binaryTree.putNode(new TreeNode<Integer>(5));
-        binaryTree.putNode(new TreeNode<Integer>(7));
-        binaryTree.putNode(new TreeNode<Integer>(9));
-        binaryTree.putNode(new TreeNode<Integer>(11));
-        binaryTree.putNode(new TreeNode<Integer>(3));
-        binaryTree.putNode(new TreeNode<Integer>(12));
+        BinaryTree<Integer> binaryTree1 = new BinaryTree<>();
+        BinaryTree<Integer> binaryTree2 = new BinaryTree<>();
+        TreeNode<Integer> node_10 = new TreeNode<>(10);
+        TreeNode<Integer> node_5 = new TreeNode<>(5);
+        TreeNode<Integer> node_15 = new TreeNode<>(15);
+        TreeNode<Integer> node_6 = new TreeNode<>(6);
+        TreeNode<Integer> node_20 = new TreeNode<>(20);
+        binaryTree1.root = node_10;
+        binaryTree1.root.left = node_5;
+        binaryTree1.root.right = node_15;
+        node_15.left = node_6;
+        node_15.right = node_20;
+
+//        binaryTree.putNode(new TreeNode<Integer>(8));
+//        binaryTree.putNode(new TreeNode<Integer>(6));
+//        binaryTree.putNode(new TreeNode<Integer>(10));
+//        binaryTree.putNode(new TreeNode<Integer>(5));
+//        binaryTree.putNode(new TreeNode<Integer>(7));
+//        binaryTree.putNode(new TreeNode<Integer>(9));
+//        binaryTree.putNode(new TreeNode<Integer>(11));
+//        binaryTree.putNode(new TreeNode<Integer>(3));
+//        binaryTree.putNode(new TreeNode<Integer>(12));
 //        int[] ints = {1,2,3};
 //        int index = binaryTree.binarySearchWithLeft(ints, 2);
 //        Log.i(TAG, "binaryTree binarySearch index->" + index);
@@ -79,9 +91,18 @@ public class MainActivity extends AppCompatActivity {
 //        linkListUtil.printListFromEnd2Start(head);
 //        collectionUtil.combine(4,3);
 
-        BacktrackingDemo backtrackingDemo = new BacktrackingDemo();
+//        BacktrackingDemo backtrackingDemo = new BacktrackingDemo();
 //        backtrackingDemo.combinationSum(new int[]{1,3,5},6);
-        backtrackingDemo.solveNQueens(5);
+//        backtrackingDemo.solveNQueens(5);
+
+
+        //=================================树相关=================================//
+        TreeDemo treeDemo = new TreeDemo();
+//        binaryTree1.generateTree(new int[]{5,4,2,8,6});
+//        binaryTree2.generateTree(new int[]{1,0,3});
+//        BinaryTree<Integer> binaryTree = new BinaryTree<>(new int[]{5, 4, 8, 11, 13, 4, 7, 2, 5, 1});
+//        treeDemo.pathSum(binaryTree.root, 22);
+        treeDemo.isValidBST(binaryTree1.root);
     }
 
 
