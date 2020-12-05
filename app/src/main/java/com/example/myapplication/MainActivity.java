@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.example.myapplication.sort.MergeSort;
+import com.example.myapplication.sort.QuickSort;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -102,7 +105,17 @@ public class MainActivity extends AppCompatActivity {
 //        binaryTree2.generateTree(new int[]{1,0,3});
 //        BinaryTree<Integer> binaryTree = new BinaryTree<>(new int[]{5, 4, 8, 11, 13, 4, 7, 2, 5, 1});
 //        treeDemo.pathSum(binaryTree.root, 22);
-        treeDemo.isValidBST(binaryTree1.root);
+//        treeDemo.isValidBST(binaryTree1.root);
+
+        //快速排序
+//        int[] arr = {10, 80, 30, 90, 40, 50, 70};
+//        QuickSort.quickSort(arr);
+//        CollectionUtil.printArr(arr);
+
+        //归并排序
+        int[] arr2 = {38, 27, 43, 3, 9, 82,10};
+        MergeSort.mergeSort(arr2);
+        CollectionUtil.printArr(arr2);
     }
 
 

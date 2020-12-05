@@ -264,7 +264,7 @@ public class CollectionUtil {
     }
 
 
-    public void printArr(int[] arr) {
+    public static void printArr(int[] arr) {
         StringBuffer buffer = new StringBuffer();
         buffer.append("{");
         for (int i = 0; i < arr.length; i++) {

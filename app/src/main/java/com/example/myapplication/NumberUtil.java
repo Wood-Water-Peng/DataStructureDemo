@@ -798,6 +798,7 @@ public class NumberUtil {
                 swap(arr, i, middle);
             }
         }
+
         //因为之前都是把小的交换到左边，所以middle往左的都比pivot小
         swap(arr, middle + 1, end);
         return middle + 1;
