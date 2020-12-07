@@ -2,6 +2,7 @@ package com.example.myapplication.sort;
 
 /**
  * 分治思想
+ * https://www.geeksforgeeks.org/merge-sort/?ref=lbp
  */
 public class MergeSort {
     public static void mergeSort(int[] arr) {
@@ -14,6 +15,7 @@ public class MergeSort {
             doMergeSort(arr, l, middle);
             doMergeSort(arr, middle + 1, r);
             merge(arr, l, middle, r);
+            //回到了上一次执行sort的位置
         }
     }
 
@@ -34,7 +36,7 @@ public class MergeSort {
         }
 
         for (int i = middle + 1; i <= r; i++) {
-            tmpRight[r - middle-1] = arr[i];
+            tmpRight[ - middle-1] = arr[i];
         }
 
         //两个数组都是有序的数组
@@ -60,7 +62,7 @@ public class MergeSort {
             }
         } else if (tmpRight.length > j) {
             for (int k = j; k < tmpRight.length; k++) {
-                arr[start] = tmpLeft[k];
+                arr[start] = tmpRight[k];
                 start++;
             }
         }

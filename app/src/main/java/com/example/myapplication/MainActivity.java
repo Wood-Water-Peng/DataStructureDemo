@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.example.myapplication.sort.HeapSort;
 import com.example.myapplication.sort.MergeSort;
 import com.example.myapplication.sort.QuickSort;
 
@@ -113,9 +114,15 @@ public class MainActivity extends AppCompatActivity {
 //        CollectionUtil.printArr(arr);
 
         //归并排序
-        int[] arr2 = {38, 27, 43, 3, 9, 82,10};
-        MergeSort.mergeSort(arr2);
-        CollectionUtil.printArr(arr2);
+//        int[] arr2 = {38, 27, 43, 3, 9, 82,10};
+//        MergeSort.mergeSort(arr2);
+//        CollectionUtil.printArr(arr2);
+
+        //堆排序
+        int[] arr3 = { 1,12,9,5,6,10};
+        HeapSort heapSort = new HeapSort();
+        heapSort.maxHeadSort(arr3);
+        CollectionUtil.printArr(arr3);
     }
 
 
