@@ -71,11 +71,10 @@ public class TreeUtil {
         recurTree(queue);
     }
 
-    private void printNode(TreeNode<Integer> node) {
+
+    public static <T> void printNode(TreeNode<T> node){
         if (node != null) {
             Log.i(TAG, "node ->" + node.data);
         }
     }
-
-
 }

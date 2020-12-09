@@ -263,7 +263,9 @@ public class CollectionUtil {
         return -1;
     }
 
-
+    public static void print(int arr) {
+        Log.i(TAG, "print ->" +arr);
+    }
     public static void printArr(int[] arr) {
         StringBuffer buffer = new StringBuffer();
         buffer.append("{");

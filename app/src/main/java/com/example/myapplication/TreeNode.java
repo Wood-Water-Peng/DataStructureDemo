@@ -3,9 +3,9 @@ package com.example.myapplication;
 import androidx.annotation.NonNull;
 
 public class TreeNode<T> {
-    TreeNode<T> left;
-    TreeNode<T> right;
-    T data;
+    public TreeNode<T> left;
+    public TreeNode<T> right;
+    public T data;
 
     public TreeNode(T data) {
         this.data = data;

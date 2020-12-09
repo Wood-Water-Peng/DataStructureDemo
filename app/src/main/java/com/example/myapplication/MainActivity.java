@@ -5,11 +5,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.example.myapplication.linklist.LinkList;
+import com.example.myapplication.linklist.LinkTest1;
 import com.example.myapplication.sort.HeapSort;
 import com.example.myapplication.sort.MergeSort;
 import com.example.myapplication.sort.QuickSort;
+import com.example.myapplication.structure.BinaryTreeStructure;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -119,10 +123,29 @@ public class MainActivity extends AppCompatActivity {
 //        CollectionUtil.printArr(arr2);
 
         //堆排序
-        int[] arr3 = { 1,12,9,5,6,10};
-        HeapSort heapSort = new HeapSort();
-        heapSort.maxHeadSort(arr3);
-        CollectionUtil.printArr(arr3);
+        int[] arr3 = {1, 23, 4, 12, 9, 5, 6, 10};
+//        HeapSort<Integer> heapSort = new HeapSort();
+//        heapSort.maxHeadSort(arr3);
+//        CollectionUtil.printArr(arr3);
+//        heapSort.insert(1);
+//        heapSort.insert(23);
+//        heapSort.insert(14);
+//        heapSort.insert(12);
+//        heapSort.insert(9);
+//        int kthElement = heapSort.findKthElement2( 2);
+//        CollectionUtil.print(kthElement);
+
+        //二叉树
+//        List<String> inorderSequence = new ArrayList<>();
+//        List<String> preorderSequence = new ArrayList<>();
+//        BinaryTreeStructure.buildTree2(Arrays.asList(4, 8, 2, 5, 1, 6, 3, 7), Arrays.asList(8, 4, 5, 2, 6, 7, 3, 1));
+        LinkTest1 linkTest1 = new LinkTest1();
+        LinkList linkList=new LinkList(1,2,2,1);
+        LinkList linkList2=new LinkList(5,0,1,4,8,4,5);
+//        LinkList<Integer> linkList2=new LinkList(1,3,6,20,30);
+//        LinkNode<Integer> integerLinkNode = linkTest1.mergeSortedList2(linkList.getRoot(), linkList2.getRoot());
+        boolean palindrome = linkTest1.isPalindrome(linkList.getRoot());
+//        linkListUtil.printLinkList(linkNode);
     }
 
 

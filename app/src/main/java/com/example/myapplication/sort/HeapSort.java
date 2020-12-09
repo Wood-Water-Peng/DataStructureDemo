@@ -14,12 +14,13 @@ import java.util.List;
 public class HeapSort<E extends Comparable<E>> {
     List<E> maxList = new ArrayList<>();
 
+
     /**
      * 1.定义出heapify方法 最大堆
      * <p>
      * 能够对一个节点进行heapify操作的前提是他的子节点已经满足max-heap或者min-heap结构
      *
-     * @param n 堆的大小，通过他和i的结合才能正确获取tree和arr的对应
+     * @param n 参与heapifyMax的数组大小，通过他和i的结合才能正确获取tree和arr的对应
      * @param i 需要heapify的元素在arr中的索引
      *          <p>
      *          对于n,i的二叉堆和数据的对应关系
@@ -27,6 +28,7 @@ public class HeapSort<E extends Comparable<E>> {
      *          <p>
      *          该方法的作用:将i元素下沉到适当位置
      */
+
 
     public void heapifyMax(int[] arr, int n, int i) {
         //1.假定该节点是最大的节点
@@ -63,7 +65,19 @@ public class HeapSort<E extends Comparable<E>> {
         for (int i = n / 2 - 1; i >= 0; i--) {
             heapifyMax(arr, n, i);
         }
+        //以上操作只是生成了一个最大堆，时间复杂度O(n)
 
+        //要达到完全排序的效果，需要将所有的元素，依次heapifyMax
+        for (int i = n - 1; i > 0; i--) {
+            //将根节点放入数组末尾
+            int swap = arr[i];
+            arr[i] = arr[0];
+            arr[0] = swap;
+            //此时arr[i]存放着最大值
+            //此时参与heapify的数组长度-1，因为之前以前确定出了最大值，后续只要在剩下的
+            //元素中找到最大值即可
+            heapifyMax(arr, i, 0);
+        }
     }
 
 
@@ -91,12 +105,13 @@ public class HeapSort<E extends Comparable<E>> {
         if (e == null) throw new IllegalArgumentException("e cannot be null");
         if (maxList.isEmpty()) {
             maxList.add(e);
+            return;
         }
         int current = maxList.size();
         //找到最后一个节点
         maxList.add(current, e);
         //将最后一个节点和父节点比较
-        while (e.compareTo(maxList.get(parent(current))) < 0) {
+        while (e.compareTo(maxList.get(parent(current))) > 0) {
             swap(current, parent(current));
             current = parent(current);
         }
@@ -141,5 +156,41 @@ public class HeapSort<E extends Comparable<E>> {
         E tmp = maxList.get(i);
         maxList.set(i, maxList.get(j));
         maxList.set(j, tmp);
+    }
+
+    /**
+     * 返回数组中第k大的元素
+     *
+     * @return 1.简单方法
+     * a.将数组进行堆排序或者快速排序  时间复杂度O(nlogn)
+     * b.遍历树，找到第k大的元素
+     * <p>
+     * 2.更好一点的方法
+     * a.生成一个最大堆  O(n)  这个是数学问题，乍一看似乎是O(nlogn),详细信息请看https://www.geeksforgeeks.org/time-complexity-of-building-a-heap/?ref=lbp
+     * b.对这个堆执行k次extractMax()方法   klogn
+     */
+    public int findKthElement(int[] arr, int k) {
+        if (k > arr.length) throw new IllegalStateException("");
+        maxHeadSort(arr);
+        return arr[k - 1];
+    }
+
+    public E findKthElement2(int k) {
+        if (k > maxList.size()) throw new IllegalStateException("");
+        E result=null;
+        for (int i = 0; i < k; i++) {
+            result = extractMax();
+        }
+        return result;
+    }
+
+    // 注意：此时的数组已经是最大堆结构
+    // 找到数组中最大的元素
+    private E extractMax() {
+        //将堆的根节点保存
+        E tmp = maxList.get(0);
+        maxList.set(0, maxList.remove(maxList.size() - 1));
+        heapifyMax(maxList.size(), 0);
+        return tmp;
     }
 }

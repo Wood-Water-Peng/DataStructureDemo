@@ -148,11 +148,11 @@ public class LinkListUtil {
     }
 
 
-    private void printLinkList(LinkNode<Integer> head) {
+    public void printLinkList(LinkNode<Integer> head) {
         if (head == null) return;
         StringBuilder builder = new StringBuilder();
         while (head != null) {
-            builder.append(head.toString() + "=");
+            builder.append(head.toString() + "-");
             head = head.pNext;
         }
         Log.i(TAG, "printLinkList->" + builder.toString());
