@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SecondActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.example.myapplication.view.MyLinearLayout
+            android:id="@+id/linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="360dp"
+            android:background="@android:color/holo_purple"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btn_01"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#ff0000"
+                android:text="btn_01\nNHH哈哈哈/n护肤好久好久军军军\n军军军军军\nnnn你能否女付\n付付付反反复复付" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.example.myapplication.view.MyRelativeLayout
+                    android:id="@+id/relative_layout"
+                    android:layout_width="160dp"
+                    android:layout_height="200dp"
+                    android:background="@color/colorAccent"
+                    >
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/btn_02"
+                        android:gravity="center"
+                        android:text="btn_05" />
+
+                    <com.example.myapplication.view.MyButton
+                        android:id="@+id/btn_02"
+                        android:layout_width="wrap_content"
+                        android:layout_height="120dp"
+                        android:gravity="center"
+                        android:text="btn_02" />
+
+
+                </com.example.myapplication.view.MyRelativeLayout>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="120dp"
+                    android:gravity="center"
+                    android:text="btn_03" />
+            </LinearLayout>
+
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:text="btn_04" />
+
+
+        </com.example.myapplication.view.MyLinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

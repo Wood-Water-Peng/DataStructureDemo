@@ -11,50 +11,50 @@ public class LinkTest1 {
      * https://leetcode-cn.com/problems/merge-two-sorted-lists/
      * 合并两个有序链表
      */
-    public LinkNode<Integer> mergeSortedList(LinkNode<Integer> a, LinkNode<Integer> b) {
-        if (a == null) return b;
-        if (b == null) return a;
-        LinkNode<Integer> curA = a;
-        LinkNode<Integer> curB = b;
-        LinkNode<Integer> rootNode = null;
-        LinkNode<Integer> newNode = null;
-        while (curA != null && curB != null) {
-            if (curA.data < curB.data) {
-                if (newNode == null) {
-                    newNode = curA;
-                    rootNode = curA;
-                } else {
-                    newNode.pNext = curA;
-                    newNode = newNode.pNext;
-                }
-                curA = curA.pNext;
-            } else {
-                if (newNode == null) {
-                    newNode = new LinkNode<>(curB.data);
-                    rootNode = newNode;
-                } else {
-                    newNode.pNext = new LinkNode<>(curB.data);
-                    newNode = newNode.pNext;
-                }
-                curB = curB.pNext;
-            }
-        }
-        if (curA == null) {
-            //将B中剩余的接上去
-            while (curB != null) {
-                newNode.pNext = new LinkNode<>(curB.data);
-                newNode = newNode.pNext;
-                curB = curB.pNext;
-            }
-        } else if (curB == null) {
-            while (curA != null) {
-                newNode.pNext = new LinkNode<>(curA.data);
-                newNode = newNode.pNext;
-                curA = curA.pNext;
-            }
-        }
-        return rootNode;
-    }
+//    public LinkNode<Integer> mergeSortedList(LinkNode<Integer> a, LinkNode<Integer> b) {
+//        if (a == null) return b;
+//        if (b == null) return a;
+//        LinkNode<Integer> curA = a;
+//        LinkNode<Integer> curB = b;
+//        LinkNode<Integer> rootNode = null;
+//        LinkNode<Integer> newNode = null;
+//        while (curA != null && curB != null) {
+//            if (curA.data < curB.data) {
+//                if (newNode == null) {
+//                    newNode = curA;
+//                    rootNode = curA;
+//                } else {
+//                    newNode.pNext = curA;
+//                    newNode = newNode.pNext;
+//                }
+//                curA = curA.pNext;
+//            } else {
+//                if (newNode == null) {
+//                    newNode = new LinkNode<>(curB.data);
+//                    rootNode = newNode;
+//                } else {
+//                    newNode.pNext = new LinkNode<>(curB.data);
+//                    newNode = newNode.pNext;
+//                }
+//                curB = curB.pNext;
+//            }
+//        }
+//        if (curA == null) {
+//            //将B中剩余的接上去
+//            while (curB != null) {
+//                newNode.pNext = new LinkNode<>(curB.data);
+//                newNode = newNode.pNext;
+//                curB = curB.pNext;
+//            }
+//        } else if (curB == null) {
+//            while (curA != null) {
+//                newNode.pNext = new LinkNode<>(curA.data);
+//                newNode = newNode.pNext;
+//                curA = curA.pNext;
+//            }
+//        }
+//        return rootNode;
+//    }
 
     LinkNode<Integer> root;
 
@@ -308,13 +308,32 @@ public class LinkTest1 {
      * 进阶思路:
      * 1.使用归并排序  nlogn
      * 2.自顶向下，空间O(logn)
+     * <p>
+     * 整体思路：
+     * 先拆，拆到不能拆分之后(递归的终止条件),然后执行逻辑操作，比如排序，接着合并
      */
     public LinkNode<Integer> sortList(LinkNode<Integer> head) {
         //1.找到链表中心点，将其拆分
-        LinkNode<Integer> centerNode = findCenterNode(head, null);
 
-        return null;
+        LinkNode<Integer> sortedHead = _sortList(head, null);
+
+        return sortedHead;
     }
+
+    public LinkNode<Integer> _sortList(LinkNode<Integer> head, LinkNode<Integer> tail) {
+        //递归的终止条件
+        if (head == null || head.pNext == null) {
+            //此时只有一个head节点
+            return head;
+        }
+        LinkNode<Integer> centerNode = findCenterNode(head, tail);
+        LinkNode<Integer> pNext = centerNode.pNext;
+        centerNode.pNext=null;
+        LinkNode<Integer> a = _sortList(head, centerNode);
+        LinkNode<Integer> b = _sortList(pNext, tail);
+        return mergeSortedList(a, b);
+    }
+
 
     //找到链表中心点
     public LinkNode<Integer> findCenterNode(LinkNode<Integer> head, LinkNode<Integer> tail) {
@@ -323,12 +342,16 @@ public class LinkTest1 {
         if (head.pNext == null) {
             return slow;
         }
-        LinkNode<Integer> fast = head.pNext.pNext;
+        LinkNode<Integer> fast = head;
         while (fast != null) {
             if (fast == tail) {
                 return slow;
             }
             if (fast.pNext == null) {
+                //走到尾结点
+                return slow;
+            }
+            if (fast.pNext == tail) {
                 //走到尾结点
                 return slow;
             }
@@ -338,4 +361,9 @@ public class LinkTest1 {
         return slow;
     }
 
+    // 合并两个有序链表
+    // 返回合并后的链表头
+    private LinkNode<Integer> mergeSortedList(LinkNode<Integer> a, LinkNode<Integer> b) {
+        return mergeSortedList2(a, b);
+    }
 }

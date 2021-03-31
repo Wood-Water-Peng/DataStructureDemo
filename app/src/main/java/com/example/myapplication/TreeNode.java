@@ -11,6 +11,7 @@ public class TreeNode<T> {
         this.data = data;
     }
 
+
     @NonNull
     @Override
     public String toString() {

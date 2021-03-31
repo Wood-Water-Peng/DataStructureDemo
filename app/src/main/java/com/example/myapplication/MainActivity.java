@@ -5,12 +5,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.example.myapplication.array.ArrayTest1;
+import com.example.myapplication.dp.Dp01;
 import com.example.myapplication.linklist.LinkList;
+import com.example.myapplication.linklist.LinkList03;
 import com.example.myapplication.linklist.LinkTest1;
+import com.example.myapplication.linklist.LinkTest2;
+import com.example.myapplication.search.BinarySearch;
 import com.example.myapplication.sort.HeapSort;
 import com.example.myapplication.sort.MergeSort;
 import com.example.myapplication.sort.QuickSort;
+import com.example.myapplication.stack.StackDemo;
+import com.example.myapplication.string.StringDemo;
 import com.example.myapplication.structure.BinaryTreeStructure;
+import com.example.myapplication.tree.TreeTest1;
+import com.example.myapplication.tree.TreeTest2;
+import com.example.myapplication.tree.TreeTest3;
+import com.example.myapplication.tree.TreeTest4;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -139,33 +150,112 @@ public class MainActivity extends AppCompatActivity {
 //        List<String> inorderSequence = new ArrayList<>();
 //        List<String> preorderSequence = new ArrayList<>();
 //        BinaryTreeStructure.buildTree2(Arrays.asList(4, 8, 2, 5, 1, 6, 3, 7), Arrays.asList(8, 4, 5, 2, 6, 7, 3, 1));
-        LinkTest1 linkTest1 = new LinkTest1();
-        LinkList linkList=new LinkList(1,2,2,1);
-        LinkList linkList2=new LinkList(5,0,1,4,8,4,5);
+//        LinkTest1 linkTest1 = new LinkTest1();
+//        LinkList linkList=new LinkList(2,1,4,3,5,1);
+//        LinkList linkList2=new LinkList(5,0,1,4,8,4,5);
 //        LinkList<Integer> linkList2=new LinkList(1,3,6,20,30);
 //        LinkNode<Integer> integerLinkNode = linkTest1.mergeSortedList2(linkList.getRoot(), linkList2.getRoot());
-        boolean palindrome = linkTest1.isPalindrome(linkList.getRoot());
+//        LinkNode linkNode = linkTest1.sortList(linkList.getRoot());
 //        linkListUtil.printLinkList(linkNode);
+//        BinaryTree<Integer> integerBinaryTree = new BinaryTree<>();
+//        TreeNode<Integer> integerTreeNode = integerBinaryTree.generateTree(new int[]{5, 4, 8,3,6});
+        TreeTest2 treeTest2 = new TreeTest2();
+//        treeTest1.lemonadeChange(new int[]{5,5,5,10,20});
+//        BinaryTree<Integer> binaryTree3 = new BinaryTree<>();
+//        TreeNode<Integer> treeNode = binaryTree3.generateTree(new int[]{4,9,0,5,1});
+//        treeTest2.deleteNode(generateTree1(), 3);
+        TreeTest3 treeTest3 = new TreeTest3();
+//        treeTest3.diameterOfBinaryTree2(generateTree2());
+        ArrayTest1 arrayTest1 = new ArrayTest1();
+        int[] nums = new int[]{-1, 0, 1, 2, -1, -4};
+        arrayTest1.threeSum(nums);
+
+        LinkTest2 linkTest2 = new LinkTest2();
+
+
+        linkTest2.addTwoNumbers(generateLinkList(), generateLinkList2());
+
+
+        //最长回文
+        Dp01 dp01 = new Dp01();
+        String babad = dp01.longestPalindrome("babad");
+
+        BinarySearch binarySearch = new BinarySearch();
+        binarySearch.searchRange(new int[]{5, 7, 7, 8, 8, 10}, 8);
+
+        TreeTest4 treeTest4 = new TreeTest4();
+        TreeNode<Integer> s = new TreeNode<>(3);
+        TreeNode<Integer> sLeft1 = new TreeNode<>(4);
+        TreeNode<Integer> sRight1 = new TreeNode<>(5);
+        TreeNode<Integer> sLeft2 = new TreeNode<>(1);
+        TreeNode<Integer> sRight2 = new TreeNode<>(2);
+        s.left = sLeft1;
+        s.right = sRight1;
+        sLeft1.left = sLeft2;
+        sLeft1.right = sRight2;
+        TreeNode<Integer> t = new TreeNode<>(4);
+        TreeNode<Integer> tLeft1 = new TreeNode<>(1);
+        TreeNode<Integer> tRight1 = new TreeNode<>(2);
+        t.left = tLeft1;
+        t.right = tRight1;
+        treeTest4.isSubtree(s, t);
+
+        testLinkList();
+
+        StackDemo stackDemo = new StackDemo();
+        String str = "(8+(4+5+2)-3)";
+        stackDemo.calculate(str);
+
+        handleStringDemo();
+    }
+
+    private void handleStringDemo() {
+        StringDemo stringDemo = new StringDemo();
+        stringDemo.minWindow("ADOBECODEBANC", "ABC");
+    }
+
+    private void testLinkList() {
+        LinkList03 list03 = new LinkList03();
+        LinkNode<Integer> head = new LinkNode<>(1);
+        LinkNode<Integer> second = new LinkNode<>(2);
+        LinkNode<Integer> third = new LinkNode<>(2);
+        LinkNode<Integer> four = new LinkNode<>(1);
+        LinkNode<Integer> five = new LinkNode<>(2);
+        LinkNode<Integer> six = new LinkNode<>(1);
+        head.pNext = second;
+        second.pNext = third;
+        third.pNext = four;
+//        four.pNext=five;
+//        five.pNext=six;
+        list03.isPalindrome(head);
     }
 
 
-    private Node<Integer> generateLinkList() {
-        Node<Integer> root = new Node<Integer>(1);
-        Node<Integer> cur = root;
-        for (int i = 3; i < 8; i += 2) {
-            cur.pNext = new Node(i);
-            cur = cur.pNext;
-        }
+    private LinkNode<Integer> generateLinkList() {
+        LinkNode<Integer> root = new LinkNode<Integer>(2);
+        LinkNode<Integer> cur = root;
+//        for (int i = 3; i < 8; i += 2) {
+//            cur.pNext = new LinkNode(i);
+//            cur = cur.pNext;
+//        }
+        cur.pNext = new LinkNode<>(4);
+        cur = cur.pNext;
+        cur.pNext = new LinkNode<>(3);
+        cur = cur.pNext;
         return root;
     }
 
-    private Node<Integer> generateLinkList2() {
-        Node<Integer> root = new Node<Integer>(2);
-        Node<Integer> cur = root;
-        for (int i = 4; i < 9; i += 2) {
-            cur.pNext = new Node(i);
-            cur = cur.pNext;
-        }
+    private LinkNode<Integer> generateLinkList2() {
+        LinkNode<Integer> root = new LinkNode<Integer>(5);
+        LinkNode<Integer> cur = root;
+//        for (int i = 3; i < 8; i += 2) {
+//            cur.pNext = new LinkNode(i);
+//            cur = cur.pNext;
+//        }
+        cur.pNext = new LinkNode<>(6);
+        cur = cur.pNext;
+        cur.pNext = new LinkNode<>(4);
+        cur = cur.pNext;
         return root;
     }
 
@@ -236,28 +326,41 @@ public class MainActivity extends AppCompatActivity {
     //遍历树
     private TreeNode generateTree2() {
         //另一个树
-        TreeNode<Integer> roo2 = new TreeNode<>(8);
+        TreeNode<Integer> roo2 = new TreeNode<>(1);
         //第二层
-        TreeNode<Integer> left3 = new TreeNode<>(9);
-        TreeNode<Integer> right3 = new TreeNode<>(2);
+        TreeNode<Integer> right2 = new TreeNode<>(3);
+        TreeNode<Integer> left2 = new TreeNode<>(2);
+        roo2.right = right2;
+        roo2.left = left2;
+        TreeNode<Integer> left3 = new TreeNode<>(4);
+        TreeNode<Integer> right3 = new TreeNode<>(5);
+        left2.left = left3;
+        left2.right = right3;
         return roo2;
     }
 
     private TreeNode generateTree1() {
-        TreeNode<Integer> root = new TreeNode<>(8);
+        TreeNode<Integer> root = new TreeNode<>(5);
         //第二层
-        TreeNode<Integer> left = new TreeNode<>(8);
-        TreeNode<Integer> right = new TreeNode<>(7);
+        TreeNode<Integer> left = new TreeNode<>(3);
+        TreeNode<Integer> right = new TreeNode<>(6);
         root.left = left;
         root.right = right;
         //第三层
-        TreeNode<Integer> left1 = new TreeNode<>(9);
-        TreeNode<Integer> right1 = new TreeNode<>(2);
+        TreeNode<Integer> left1 = new TreeNode<>(2);
+        TreeNode<Integer> right1 = new TreeNode<>(4);
         left.left = left1;
         left.right = right1;
-        //第四层
-        TreeNode<Integer> left2 = new TreeNode<>(4);
+
         TreeNode<Integer> right2 = new TreeNode<>(7);
+        right.right = right2;
+//        //第四层
+//        TreeNode<Integer> left3 = new TreeNode<>(3);
+//        TreeNode<Integer> right3 = new TreeNode<>(-2);
+//        TreeNode<Integer> right4 = new TreeNode<>(1);
+//        left1.left = left3;
+//        left1.right = right3;
+//        right1.right = right4;
         return root;
     }
 

@@ -264,8 +264,9 @@ public class CollectionUtil {
     }
 
     public static void print(int arr) {
-        Log.i(TAG, "print ->" +arr);
+        Log.i(TAG, "print ->" + arr);
     }
+
     public static void printArr(int[] arr) {
         StringBuffer buffer = new StringBuffer();
         buffer.append("{");
@@ -275,6 +276,28 @@ public class CollectionUtil {
         }
         buffer.append("}");
         Log.i(TAG, "printArr ->" + buffer.toString());
+    }
+
+    public static void printList2(List<Integer> arr) {
+        StringBuffer buffer = new StringBuffer();
+        buffer.append("{");
+        for (int i = 0; i < arr.size(); i++) {
+            buffer.append(arr.get(i));
+            buffer.append(",");
+        }
+        buffer.append("}");
+        Log.i(TAG, "printList2 ->" + buffer.toString());
+    }
+
+    public static void printList3(List<String> arr) {
+        StringBuffer buffer = new StringBuffer();
+        buffer.append("{");
+        for (int i = 0; i < arr.size(); i++) {
+            buffer.append(arr.get(i));
+            buffer.append(",");
+        }
+        buffer.append("}");
+        Log.i(TAG, "printList3 ->" + buffer.toString());
     }
 
     public void printList(List<List<Integer>> list) {
@@ -472,4 +495,12 @@ public class CollectionUtil {
         }
     }
 
+
+    public static List<Integer> cloneIntegerList(List<Integer> list) {
+        List<Integer> result = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            result.add(i);
+        }
+        return result;
+    }
 }
